@@ -24,6 +24,12 @@ const POST_MESSAGE = gql`
   }
 `;
 
+const initialPayloadValues = {
+  username: "",
+  content: " ",
+  mentionedUsers: [] as MentionItem[],
+};
+
 type Props = {
   selectedUser: string;
 };
@@ -32,11 +38,7 @@ function TextInput(props: Props) {
   const { selectedUser } = props;
   const isUserSelected = !!selectedUser;
   const [message, setMessage] = useState("");
-  const [payload, setPayload] = useState({
-    username: "",
-    content: " ",
-    mentionedUsers: [] as MentionItem[],
-  });
+  const [payload, setPayload] = useState(initialPayloadValues);
   console.log("selectedUser", selectedUser);
 
   const [postMessage] = useMutation(POST_MESSAGE);
@@ -67,7 +69,14 @@ function TextInput(props: Props) {
         ...payload,
         mentionedUsers,
       },
-    });
+    })
+      .then(() => {
+        setMessage("");
+        setPayload({ ...initialPayloadValues });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <form onSubmit={handleSubmit} style={{ display: "flex", gap: 20 }}>
