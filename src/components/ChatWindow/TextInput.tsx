@@ -4,7 +4,12 @@ import { USERS } from "../../constants";
 import MentionStyles from "../../styles/MentionStyles";
 import { Button } from "@mui/material";
 
-function TextInput() {
+type Props = {
+  isUserSelected: boolean;
+};
+
+function TextInput(props: Props) {
+  const { isUserSelected } = props;
   const [message, setMessage] = useState("");
   const handleChange: OnChangeHandlerFunc = (
     event,
@@ -24,14 +29,12 @@ function TextInput() {
     console.log("Did Submit");
   };
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", gap: 20, width: "100%", flex: 1 }}
-    >
+    <form onSubmit={handleSubmit} style={{ display: "flex", gap: 20 }}>
       <MentionsInput
         style={MentionStyles}
         value={message}
         onChange={handleChange}
+        disabled={!isUserSelected}
       >
         <Mention
           trigger="@"
