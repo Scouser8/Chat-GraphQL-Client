@@ -23,7 +23,7 @@ type Props = {
 
 function ChatMessages(props: Props) {
   const { selectedUser } = props;
-  const { data } = useQuery(GET_MESSAGES);
+  const { data } = useQuery(GET_MESSAGES, { pollInterval: 3000 });
   const chatMessages: Message[] = data?.messages || [];
   return (
     <Container sx={messagesContainerStyles}>
