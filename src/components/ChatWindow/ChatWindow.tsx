@@ -12,6 +12,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import ChatMessages from "./ChatMessages";
 import { useState } from "react";
 import { USERS } from "../../constants";
+import ChatWindowStyles from "../../styles/ChatWindowStyles";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
@@ -26,28 +27,32 @@ function ChatWindow() {
   };
   return (
     <ApolloProvider client={client}>
-      <Container>
-        <ChatMessages />
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <FormControl sx={{ width: 150 }}>
-            <InputLabel id="select-chat-user">User</InputLabel>
+      <Container sx={ChatWindowStyles}>
+        <Box className="selectUserContainer">
+          <FormControl className="selectUserInput">
+            <InputLabel id="select-chat-user-label">User</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="select-chat-user-label"
               value={selectedUser}
               label="Age"
               onChange={handleSelectUser}
               placeholder="Select user to chat"
+              sx={{ height: 50 }}
             >
-              {USERS.map(({ id, username }) => (
-                <MenuItem key={id} value={id}>
+              {USERS.map(({ username }) => (
+                <MenuItem key={username} value={username}>
                   {username}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          <TextInput isUserSelected={!!selectedUser} />
         </Box>
+        <Container>
+          <ChatMessages selectedUser={selectedUser} />
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <TextInput isUserSelected={!!selectedUser} />
+          </Box>
+        </Container>
       </Container>
     </ApolloProvider>
   );
