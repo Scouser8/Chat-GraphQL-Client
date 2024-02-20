@@ -33,10 +33,12 @@ function TextInput(props: Props) {
   const isUserSelected = !!selectedUser;
   const [message, setMessage] = useState("");
   const [payload, setPayload] = useState({
-    username: selectedUser,
-    content: "",
+    username: "",
+    content: " ",
     mentionedUsers: [] as MentionItem[],
   });
+  console.log("selectedUser", selectedUser);
+
   const [postMessage] = useMutation(POST_MESSAGE);
   const handleChange: OnChangeHandlerFunc = (
     event,
@@ -49,7 +51,7 @@ function TextInput(props: Props) {
     console.log("newValue", newValue);
     console.log("newPlainTextValue", newPlainTextValue);
     setPayload({
-      ...payload,
+      username: selectedUser,
       content: newPlainTextValue,
       mentionedUsers: usersMentioned,
     });
