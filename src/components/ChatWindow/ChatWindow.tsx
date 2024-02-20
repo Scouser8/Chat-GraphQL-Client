@@ -60,7 +60,7 @@ function ChatWindow() {
         <Container>
           <ChatMessages selectedUser={selectedUser} />
           <Box sx={{ display: "flex", gap: 2 }}>
-            <TextInput isUserSelected={!!selectedUser} />
+            <TextInput selectedUser={selectedUser} />
           </Box>
         </Container>
       </Container>

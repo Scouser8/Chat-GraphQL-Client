@@ -27,10 +27,10 @@ function ChatMessages(props: Props) {
   const chatMessages: Message[] = data?.messages || [];
   return (
     <Container sx={messagesContainerStyles}>
-      {chatMessages?.map(({ username, content }) => {
+      {chatMessages?.map(({ id, username, content }) => {
         const isFromCurrentUser = selectedUser === username;
         return (
-          <Box sx={messageStyles(isFromCurrentUser)}>
+          <Box key={id} sx={messageStyles(isFromCurrentUser)}>
             {!isFromCurrentUser && (
               <Avatar>{getUserAvatarText(username)}</Avatar>
             )}
