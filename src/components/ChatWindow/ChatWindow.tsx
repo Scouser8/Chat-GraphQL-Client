@@ -14,8 +14,18 @@ import { useState } from "react";
 import { USERS } from "../../constants";
 import ChatWindowStyles from "../../styles/ChatWindowStyles";
 
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: "ws://localhost:4000/graphql",
+  })
+);
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  // link: wsLink,
+  uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
 
